@@ -50,7 +50,7 @@ def evaluate_probs(model, test_iter: DataLoader) -> Tuple[List, List, List]:
     y_probs = []
 
     model.eval()
-    sm = torch.nn.Softmax(dim=1)
+    sm = torch.nn.Softmax(dim=-1)
 
     with torch.no_grad():
         for batch in test_iter:
