@@ -94,7 +94,7 @@ def predict(model, iterator: DataLoader) -> Tuple[List, List]:
 
     model.eval()
 
-    sm = torch.nn.Softmax(dim=1)
+    sm = torch.nn.Softmax(dim=-1)
 
     with torch.no_grad():
         for batch in iterator:

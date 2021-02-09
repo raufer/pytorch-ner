@@ -3,9 +3,10 @@ import unittest
 
 from src.constants import MODEL_NAME
 from src.models import make_model
-from src.ops.ner.prediction import subwords_class_probabilities_to_original_text, \
-    subwords_class_probabilities_to_original_text_with_scores
+from src.ops.ner.prediction import subwords_class_probabilities_to_original_text
+from src.ops.ner.prediction import subwords_class_probabilities_to_original_text_with_scores
 from src.ops.ner.prediction import predict_word_classes
+from src.ops.ner.prediction import predict_word_classes_with_probabilities
 from src.tokenizer import make_roberta_tokenizer
 
 
