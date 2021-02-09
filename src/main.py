@@ -163,7 +163,7 @@ def pipeline(datapath: str, modelname: str, output_dir: str, stratify_by=None) -
     classification_report(y_true, y_pred)
     write_confusion_matrix(y_true, y_pred, output_path)
 
-    return model, y_true, y_pred, output_path, train_dataset, val_dataset, test_dataset
+    return model, labels, y_true, y_pred, output_path, train_dataset, val_dataset, test_dataset
 
 
 if __name__ == '__main__':
@@ -177,7 +177,7 @@ if __name__ == '__main__':
     for arg, value in sorted(vars(args).items()):
         logging.info(f"Argument {arg}: '{value}'")
 
-    model, y_true, y_pred, output_path = pipeline(
+    model, labels, y_true, y_pred, output_path, train_dataset, val_dataset, test_dataset = pipeline(
         datapath=datapath,
         modelname=modelname,
         output_dir=output_dir

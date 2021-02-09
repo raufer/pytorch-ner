@@ -57,6 +57,53 @@ def subwords_class_probabilities_to_original_text(text: str, offset_mapping: Lis
     return predictions
 
 
+def subwords_class_probabilities_to_original_text_with_scores(text: str, offset_mapping: List[Tuple[int, int]], probs: List[List[float]]) -> List[Tuple]:
+    """
+    Returns the aggregated class prediction at the original sentence word level
+
+    A NER system the model predicts tag annotations on the sub-word level,
+    not on the word level. To obtain word-level annotations,
+    we need to aggregate the sub-word level predictions for each word.
+
+    Aggregation method:
+        *  average the classes of subword predictions
+
+    Returns a list of pairs :: (token, class)
+    e.g.
+    ('The', 2, array([0.6001, 0.3614, 0.9699]))
+    ('aerodynamics', 1, array([0.24005, 0.6973 , 0.40095]))
+    ('of', 2, array([0.085 , 0.0293, 0.8442]))
+    ('the', 0, array([0.9242, 0.4379, 0.2544]))
+    """
+    doc = nlp(text)
+
+    char_offsets = [(token.idx, token.idx + len(token), token.i) for token in doc]
+
+    if len(offset_mapping) != len(probs):
+        raise AssertionError(f"Number of subwords offsets is different from the number of subword predicitons '{len(offset_mapping)} != {len(probs)}'")
+
+    char_index_to_token_index_mapping = reduce(
+        lambda acc, x: {**acc, **x},
+        [{i: c for i in range(a, b + 1)} for a, b, c in char_offsets],
+        dict()
+    )
+
+    xs = ((offset, probs) for offset, probs in zip(offset_mapping, probs) if (offset != (0, 0)))
+    xs = ((char_index_to_token_index_mapping[b], probs) for (a, b), probs in xs)
+
+    data = defaultdict(lambda : [])
+    for token_idx, probs in xs:
+        data[token_idx].append(probs)
+
+    data = {k: np.array(v).mean(axis=0) for k, v in data.items()}
+    data = [(k, np.argmax(v), v) for k, v in data.items()]
+
+    predictions = [(b, c) for _, b, c in sorted(data, key=lambda x: x[0])]
+    predictions = list(zip([t.text for t in doc], predictions))
+    predictions = [(a, b, c) for a, (b, c) in predictions]
+    return predictions
+
+
 def predict(model, iterator: DataLoader) -> Tuple[List, List]:
     """
     Given a model and a data iterator
