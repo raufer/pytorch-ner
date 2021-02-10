@@ -141,7 +141,7 @@ def predict_word_classes(model, tokenizer, texts: List[str]) -> List[List[Tuple[
     return predictions
 
 
-def predict_word_classes_with_probabilities(model, tokenizer, texts: List[str]) -> List[List[Tuple[str, int]]]:
+def predict_word_classes_with_probabilities(model, tokenizer, texts: List[str]) -> List[List[Tuple[str, int, np.array]]]:
     """
     For each text predicts the word-level classes by aggregating and averaging
     the predictions at the subword level as dictated by the NER system
@@ -152,9 +152,5 @@ def predict_word_classes_with_probabilities(model, tokenizer, texts: List[str]) 
     xs = _base_predict_word_classes(model, tokenizer, texts)
     predictions = [subwords_class_probabilities_to_original_text_with_scores(t, ox.tolist(), px) for (t, ox, px) in xs]
     return predictions
-
-
-
-
 
 
