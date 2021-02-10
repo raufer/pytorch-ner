@@ -31,14 +31,14 @@ class TestOpsNERSpans(unittest.TestCase):
         expected = [
             {
                 'start': 4,
-                'end': 23,
+                'end': 24,
                 'token_start': 1,
                 'token_end': 2,
                 'label': 'B'
             },
             {
                 'start': 36,
-                'end': 47,
+                'end': 48,
                 'token_start': 5,
                 'token_end': 7,
                 'label': 'C'
@@ -60,14 +60,14 @@ class TestOpsNERSpans(unittest.TestCase):
         expected = [
             {
                 'start': 4,
-                'end': 23,
+                'end': 24,
                 'token_start': 1,
                 'token_end': 2,
                 'label': 'B'
             },
             {
                 'start': 36,
-                'end': 47,
+                'end': 48,
                 'token_start': 5,
                 'token_end': 7,
                 'label': 'B'

@@ -1,6 +1,6 @@
 import unittest
 
-from src.ops.ner import NO_LABEL_IX
+from src.ops.ner import NO_LABEL_IX, NO_LABEL_TOKEN
 from src.ops.ner.preprocess import create_character_mapping_from_ids_to_labels, make_labels_mapping
 
 
@@ -60,7 +60,7 @@ class TestOpsNERPreprocess(unittest.TestCase):
     def test_make_labels_mapping(self):
 
         result = make_labels_mapping([])
-        expected = {NO_LABEL_IX: 0}
+        expected = {NO_LABEL_TOKEN: 0}
         self.assertDictEqual(result, expected)
 
         spans = [{
@@ -72,7 +72,7 @@ class TestOpsNERPreprocess(unittest.TestCase):
         }]
         spans_list = [spans]
         result = make_labels_mapping(spans_list)
-        expected = {NO_LABEL_IX: 0, 'Subject': 1}
+        expected = {NO_LABEL_TOKEN: 0, 'Subject': 1}
         self.assertDictEqual(result, expected)
 
         spans_list = []
@@ -102,7 +102,7 @@ class TestOpsNERPreprocess(unittest.TestCase):
             }
         ])
         result = make_labels_mapping(spans_list)
-        expected = {NO_LABEL_IX: 0, 'Detail': 1, 'Subject': 2}
+        expected = {NO_LABEL_TOKEN: 0, 'Detail': 1, 'Subject': 2}
         self.assertDictEqual(result, expected)
 
         spans_list = []
@@ -132,5 +132,5 @@ class TestOpsNERPreprocess(unittest.TestCase):
             }
         ])
         result = make_labels_mapping(spans_list)
-        expected = {NO_LABEL_IX: 0, 'Subject': 1, 'Detail': 2}
+        expected = {NO_LABEL_TOKEN: 0, 'Subject': 1, 'Detail': 2}
         self.assertDictEqual(result, expected)

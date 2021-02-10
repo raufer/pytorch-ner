@@ -47,7 +47,7 @@ def predictions_to_spans(predictions: List[Tuple[str, int]], labels: Dict, base_
     spans = []
     for k, xs in groups:
         start = sum([len(i) for i in tokens[:xs[0]]]) + len(tokens[:xs[0]])
-        end = start + sum(map(len, tokens[xs[0]: xs[-1] + 1])) + len(tokens[xs[0]: xs[-1]]) - 1
+        end = start + sum(map(len, tokens[xs[0]: xs[-1] + 1])) + len(tokens[xs[0]: xs[-1]])
         span = {
             'start': start,
             'end': end,
