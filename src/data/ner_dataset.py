@@ -28,9 +28,8 @@ class NERDataset(Dataset):
           - start :: int
           - end :: int
 
-      These represent the locations of the span annotations for the text, along
-      with its label
-
+        These represent the locations of the span annotations for the text, along
+        with its label
         """
         self.df = df
         self.labels_mapping = labels_mapping
