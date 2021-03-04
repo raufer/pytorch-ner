@@ -85,7 +85,7 @@ def _make_target(text: str, offset: Tensor, spans: List[Dict], labels: Dict) -> 
 
         if (a, b) == (0, 0):
             t = -1
-        elif b >= len(text):
+        elif (b >= len(text)) or (a >= len(text)):
             t = -1
         else:
             t = next((i for i in [character_mapping[a], character_mapping[b]] if i != 0), 0)
